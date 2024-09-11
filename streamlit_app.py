@@ -3,9 +3,9 @@ import openai
 from llama_index.llms.openai import OpenAI
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
 
-st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
+st.set_page_config(page_title="Chat with the NWS Directives, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 openai.api_key = st.secrets.openai_key
-st.title("Chat with the AWIPS Software System Design Description")
+st.title("Chat with the NWS Directives on Science and Technology")
 # st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
 
 if "messages" not in st.session_state.keys():  # Initialize the chat messages history
@@ -18,16 +18,16 @@ if "messages" not in st.session_state.keys():  # Initialize the chat messages hi
 
 @st.cache_resource(show_spinner=False)
 def load_data():
-    reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
+    reader = SimpleDirectoryReader(input_dir="./directives", recursive=True)
     docs = reader.load_data()
     Settings.llm = OpenAI(
         model="gpt-4o-mini",
         temperature=0.2,
         system_prompt="""You are an expert on 
-        the NOAA AWIPS and your 
-        job is to answer technical questions. 
+        the NOAA National Weather Service Directives on Science and Technology and your 
+        job is to answer detailed questions. 
         Assume that all questions are related 
-        to NOAA or AWIPS. Keep 
+        to NOAA or National Weather Service. Keep 
         your answers technical and based on 
         facts – do not hallucinate features.""",
     )
